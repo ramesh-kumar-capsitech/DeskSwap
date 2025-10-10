@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign - Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-white h-screen overflow-hidden flex items-center justify-center">
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="p-3 mb-3 rounded 
+                  {% if category == 'error' %}bg-red-200 text-red-800
+                  {% elif category == 'success' %}bg-green-200 text-green-800
+                  {% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="w-full max-w-6xl h-[95vh] grid grid-cols-1 md:grid-cols-2 shadow-2xl rounded-xl overflow-hidden">
+
+        <div class="bg-white hidden md:flex items-center justify-center">
+            <img src="/static/office.jpg" alt="Office" class="w-full h-full object-cover">
+        </div>
+
+
+        <div class="bg-gray-50 flex flex-col p-4 md:p-6 relative">
+
+
+
+            <div class="flex justify-center">
+                <img src="/static/logo.png" alt="Capsitech Logo" class="" width="150px">
+            </div>
+
+
+            <h2 class="text-xl font-semibold text-gray-800 mb-2 text-center">Sign Up</h2>
+
+
+            <div class="overflow-y-auto flex-grow px-1" style="max-height: calc(95vh - 120px);">
+
+                <form action="/signup" method="POST" class="space-y-3">
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Full Name</label>
+                        <input type="text" name="fullname" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Email</label>
+                        <input type="email" name="email" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Mobile Number</label>
+                        <input type="tel" name="mobile" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Department</label>
+                        <select name="department" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="web">Web</option>
+                            <option value="app">App</option>
+                            <option value="ai_ml">AI/ML</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Employee ID</label>
+                        <input type="text" name="employee_id" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Password</label>
+                        <input type="password" name="password" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Confirm Password</label>
+                        <input type="password" name="confirm_password" required
+                            class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    <button type="submit"
+                        class="w-full mt-2 bg-red-600 hover:bg-red-700 text-white py-2 rounded transition">SIGN
+                        UP</button>
+
+                    <p class="text-sm text-center mt-2">
+                        Already have an account?
+                        <a href="/" class="text-red-600 hover:underline">Log in</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

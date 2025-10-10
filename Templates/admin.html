@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - DeskSwap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-[#F9F3E1] font-cursive">
+
+
+    <nav class="flex justify-between items-center p-5 bg-white shadow-md">
+        <div class="text-[#D24146] font-bold text-[25px]">
+            <i> DESKSWAP ADMIN</i>
+        </div>
+        <a href="/logout" class="bg-[#D24146] text-white px-4 py-2 rounded hover:bg-red-600 transition-all">Logout</a>
+    </nav>
+
+
+    <section class="max-w-6xl mx-auto mt-8 space-y-10">
+        <div class="max-w-6xl mx-auto mt-4">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="p-3 mb-3 rounded 
+                    {% if category == 'error' %}bg-red-200 text-red-800
+                    {% elif category == 'success' %}bg-green-200 text-green-800
+                    {% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+
+
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-2xl font-bold text-[#D24146] mb-4">Workspace Seat Status</h2>
+            <section>
+                <div class="w-[1100px] h-[470px] bg-[#D24146]   m-auto">
+                    <div class="pt-[20px]">
+                        <h1 class="font-bold text-[25px] text-white text-center font-[cursive]">
+                            <i>Workspace Visual Space</i>
+                        </h1>
+                    </div>
+
+                    <div class="flex justify-evenly mt-[50px]">
+
+                        <div class="bg-[#F9F3E1] w-[300px] h-[300px] rounded flex flex-col items-center p-4">
+                            <h1 class="font-bold text-xl mb-4 text-center">
+                                <i>Desk 1F</i>
+                            </h1>
+                            <div class="grid grid-cols-5 gap-2">
+                                {% for i in range(1, 21) %}
+                                {% set seat_no = '1F-' ~ i %}
+                                <button type="button" class="seat-btn w-10 h-10 border rounded flex items-center justify-center
+                                    {% if seat_status[seat_no] == 'approved' %}bg-red-200 hover:bg-red-300
+                                    {% elif seat_status[seat_no] == 'pending' %}bg-yellow-200 hover:bg-yellow-300
+                                    {% elif seat_status[seat_no] == 'blocked' %}bg-black text-white hover:bg-gray-800 
+                                    {% else %}bg-green-200 hover:bg-green-300{% endif %}" data-seat-no="{{ seat_no }}"
+                                    data-floor="1">
+                                    <i class="fa-solid fa-desktop"></i>
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+
+                        <div class="bg-[#F9F3E1] w-[300px] h-[300px] rounded flex flex-col items-center p-4">
+                            <h1 class="font-bold text-xl mb-4 text-center">
+                                <i>Desk 2F</i>
+                            </h1>
+                            <div class="grid grid-cols-5 gap-2">
+                                {% for i in range(1, 21) %}
+                                {% set seat_no = '2F-' ~ i %}
+                                <button type="button" class="seat-btn w-10 h-10 border rounded flex items-center justify-center
+                                    {% if seat_status[seat_no] == 'approved' %}bg-red-200 hover:bg-red-300
+                                    {% elif seat_status[seat_no] == 'pending' %}bg-yellow-200 hover:bg-yellow-300
+                                    {% elif seat_status[seat_no] == 'blocked' %}bg-black text-white hover:bg-gray-800 cursor-not-allowed
+                                    {% else %}bg-green-200 hover:bg-green-300{% endif %}" data-seat-no="{{ seat_no }}"
+                                    data-floor="2">
+                                    <i class="fa-solid fa-desktop"></i>
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+
+                        <div class="bg-[#F9F3E1] w-[300px] h-[300px] rounded flex flex-col items-center p-4">
+                            <h1 class="font-bold text-xl mb-6 text-center">
+                                <i>Conference 3F</i>
+                            </h1>
+                            <div class="grid grid-cols-2 gap-6">
+                                {% for i in range(1, 5) %}
+                                {% set seat_no = 'CF-' ~ i %}
+                                <button type="button" class="conference-btn w-20 h-20 border rounded flex items-center justify-center
+                                    {% if seat_status[seat_no] == 'approved' %}bg-red-300 hover:bg-red-400
+                                    {% elif seat_status[seat_no] == 'pending' %}bg-yellow-300 hover:bg-yellow-400
+                                    {% elif seat_status[seat_no] == 'blocked' %}bg-black text-white hover:bg-gray-800 cursor-not-allowed
+                                    {% else %}bg-green-300 hover:bg-green-400{% endif %}" data-seat-no="{{ seat_no }}"
+                                    data-floor="3">
+                                    <i class="fa-solid fa-desktop"></i>
+
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+
+                <div class="w-[1100px] bg-white p-4  flex gap-6 mx-[1px]">
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 bg-red-200 rounded"></div>
+                        <span>Booked</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 bg-yellow-200 rounded"></div>
+                        <span>Pending</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 bg-black rounded"></div>
+                        <span class="text-black">Blocked</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 bg-green-200 rounded"></div>
+                        <span>Available</span>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+
+        <div id="blockSeatModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Block Seat</h3>
+                    <button id="closeBlockModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Seat Number</label>
+                        <input type="text" id="blockSeatNumber" class="mt-1 p-2 w-full border rounded" readonly>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button id="confirmBlock" class="w-full bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">
+                        Block Seat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="unblockSeatModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg p-6 w-96">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Unblock Seat</h3>
+                    <button id="closeUnblockModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Seat Number</label>
+                        <input type="text" id="unblockSeatNumber" class="mt-1 p-2 w-full border rounded" readonly>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button id="confirmUnblock"
+                        class="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
+                        Unblock Seat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-2xl font-bold text-[#D24146] mb-4">Pending Approval Requests</h2>
+            <div class="space-y-3">
+                {% for booking in pending_bookings %}
+                <div class="flex justify-between items-center p-4 bg-gray-100 rounded-lg">
+                    <div>
+                        <strong>{{ booking.fullname }}</strong> ({{ booking.employee_id }})<br>
+                        Seat: {{ booking.seat_no }} | Shift: {{ booking.timing }}<br>
+                        <small class="text-gray-500">Requested: {{ booking.timestamp }}</small>
+                    </div>
+                    <div class="">
+                        <form method="POST" action="/update_booking/{{ booking.id }}/approved" class="m-[10px]">
+                            <button type="submit"
+                                class=" w-[100px]  bg-green-500 text-white px-3 py-1 mx-[20px] rounded hover:bg-green-600">
+                                Approve
+                            </button>
+                        </form>
+                        <form method="POST" action="/update_booking/{{ booking.id }}/rejected">
+                            <button type="submit"
+                                class="w-[100px] bg-red-500 text-white px-3 py-1 mx-[30px] rounded hover:bg-red-600">
+                                Reject
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-4 text-gray-500">
+                    No pending requests
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-2xl font-bold text-[#D24146] mb-4">Approved Bookings</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-left border">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="p-3">Employee</th>
+                            <th class="p-3">Seat</th>
+                            <th class="p-3">Shift</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Booked On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in approved_bookings %}
+                        <tr class="border-t">
+                            <td class="p-3">{{ booking.fullname }}<br><small>{{ booking.email }}</small></td>
+                            <td class="p-3">{{ booking.seat_no }}</td>
+                            <td class="p-3">{{ booking.timing }}</td>
+                            <td class="p-3">
+                                <span class=" px-2 py-1 rounded-full text-xs 
+                                    {% if booking.status == 'approved' %}bg-green-100 text-green-800
+                                    {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                    {{ booking.status }}
+                                </span>
+                            </td>
+                            <td class="p-3">{{ booking.timestamp }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="p-3 text-center text-gray-500">No approved bookings</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-10 text-center text-gray-500 text-sm py-4">
+        DeskSwap
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const blockSeatModal = document.getElementById('blockSeatModal');
+            const unblockSeatModal = document.getElementById('unblockSeatModal');
+            const closeBlockModal = document.getElementById('closeBlockModal');
+            const closeUnblockModal = document.getElementById('closeUnblockModal');
+            const confirmBlock = document.getElementById('confirmBlock');
+            const confirmUnblock = document.getElementById('confirmUnblock');
+
+
+            document.querySelectorAll('.seat-btn').forEach(btn => {
+                btn.addEventListener('contextmenu', function (e) {
+                    e.preventDefault();
+                    const seatNo = this.getAttribute('data-seat-no');
+                    const isBlocked = this.classList.contains('bg-black');
+
+                    if (isBlocked) {
+                        document.getElementById('unblockSeatNumber').value = seatNo;
+                        unblockSeatModal.classList.remove('hidden');
+                    } else {
+                        document.getElementById('blockSeatNumber').value = seatNo;
+                        blockSeatModal.classList.remove('hidden');
+                    }
+                });
+            });
+
+
+            confirmBlock.addEventListener('click', function () {
+                const seatNo = document.getElementById('blockSeatNumber').value;
+                fetch('/block-seat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `seat_no=${encodeURIComponent(seatNo)}`
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        blockSeatModal.classList.add('hidden');
+                        window.location.reload();
+                    });
+            });
+
+
+            confirmUnblock.addEventListener('click', function () {
+                const seatNo = document.getElementById('unblockSeatNumber').value;
+                fetch('/unblock-seat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `seat_no=${encodeURIComponent(seatNo)}`
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        unblockSeatModal.classList.add('hidden');
+                        window.location.reload();
+                    });
+            });
+
+
+            closeBlockModal.addEventListener('click', () => blockSeatModal.classList.add('hidden'));
+            closeUnblockModal.addEventListener('click', () => unblockSeatModal.classList.add('hidden'));
+        });
+    </script>
+</body>
+
+</html>

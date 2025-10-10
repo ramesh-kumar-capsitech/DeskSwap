@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-gray-100 p-6 font-sans">
+
+    <section>
+        <nav class="flex m-[20px] justify-between items-center h-[50px]">
+            <div class="text-[#D24146] font-bold text-[25px] font-cursive "><img src="/static/logo.png" alt=""
+                    width="200px" height="100px">
+            </div>
+            <div>
+                <ul class="flex space-x-4">
+                    <a href="/dashboard">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-chair text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/visualmap">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class=" fa-regular fa-map text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/profile">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-user text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/notification">
+
+                        <li class=" group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl
+                        text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-bell text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Profile Card -->
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-6 space-y-6">
+
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div>
+                    <h2 class="text-xl font-bold">{{ user.fullname }}</h2>
+                    <p class="text-sm text-gray-600">{{ user.department }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-gray-50 rounded-lg p-4 shadow">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Personal Information</h3>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+                <div><span class="font-medium">Full Name:</span>
+                    {{ user.fullname }} </div>
+                <div><span class="font-medium">Email:</span> {{ user.email }}</div>
+                <div><span class="font-medium">Mobile Number:</span> {{ user.mobile }}</div>
+                <div><span class="font-medium">Department:</span> {{ user.department }}</div>
+                <div><span class="font-medium">Employee ID:</span> {{ user.employee_id }}</div>
+            </div>
+        </div>
+
+
+        <div class="w-[100px] h-[40px] bg-red-600 text-white font-cursive text-center p-[5px] rounded ">
+            <a href="/logout"><button>
+                    <i class="fa-solid fa-right-from-bracket"></i> Log out
+                </button></a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="bg-gray-100 p-6 font-sans">
+
+    <section>
+        <nav class="flex m-[20px] justify-between items-center h-[50px]">
+            <div class="text-[#D24146] font-bold text-[25px] font-cursive "><img src="/static/logo.png" alt=""
+                    width="200px" height="100px">
+            </div>
+            <div>
+                <ul class="flex space-x-4">
+                    <a href="/dashboard">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-chair text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/visualmap">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class=" fa-regular fa-map text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/profile">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-user text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/notification">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-bell text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <section>
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow p-6">
+            <h2 class="text-2xl font-bold text-[#D24146] mb-6">Your Booking Notifications</h2>
+
+            <div class="space-y-4">
+                {% for booking in bookings %}
+                <div
+                    class="border rounded-lg p-4 {% if booking.status == 'approved' %}bg-green-50 border-green-200{% elif booking.status == 'rejected' %}bg-red-50 border-red-200{% else %}bg-yellow-50 border-yellow-200{% endif %}">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold">Seat: {{ booking.seat_no }}</h3>
+                            <p class="text-sm text-gray-600">Requested on: {{ booking.timestamp }}</p>
+                            <p class="text-sm">Shift: {{ booking.timing }}</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-sm font-medium 
+                            {% if booking.status == 'approved' %}bg-green-100 text-green-800
+                            {% elif booking.status == 'rejected' %}bg-red-100 text-red-800
+                            {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                            {{ booking.status|capitalize }}
+                        </span>
+                    </div>
+                    {% if booking.status == 'approved' %}
+                    <div class="mt-2 text-green-600">
+                        <i class="fas fa-check-circle"></i> Your booking has been approved!
+                    </div>
+                    {% elif booking.status == 'rejected' %}
+                    <div class="mt-2 text-red-600">
+                        <i class="fas fa-times-circle"></i> Your booking has been rejected.
+                    </div>
+                    {% else %}
+                    <div class="mt-2 text-yellow-600">
+                        <i class="fas fa-clock"></i> Your booking is pending approval.
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-bell-slash text-4xl mb-2"></i>
+                    <p>No notifications yet</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

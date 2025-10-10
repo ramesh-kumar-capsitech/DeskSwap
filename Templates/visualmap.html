@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="font-cursive bg-[]">
+    <section>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="fixed top-4 right-4 space-y-2 z-50">
+            {% for category, message in messages %}
+            <div class="px-4 py-2 rounded shadow text-white 
+                {% if category == 'success' %}bg-green-500
+                {% elif category == 'error' %}bg-red-500
+                {% else %}bg-gray-500{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </section>
+
+
+    <div id="seatModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-96">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Seat Details</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Desk Number</label>
+                    <p id="deskNumber" class="mt-1 p-2 bg-gray-100 rounded"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Floor Number</label>
+                    <p id="floorNumber" class="mt-1 p-2 bg-gray-100 rounded"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Status</label>
+                    <p id="seatStatus" class="mt-1 p-2 bg-gray-100 rounded"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Booking Date</label>
+                    <input type="date" name="date"
+                        class="mt-2 w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400"
+                        min="{{ today_date }}">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Shift Timing</label>
+
+                    <label class="block">
+                        <span class="font-medium">Choose shift</span>
+                        <select name="shift"
+                            class="mt-2 w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-400">
+                            <option value="morning">Morning — 09:00 AM to 01:00 PM</option>
+                            <option value="afternoon">Afternoon — 01:30 PM to 05:30 PM</option>
+                            <option value="evening">Evening — 06:00 PM to 09:30 PM</option>
+                        </select>
+                    </label>
+
+
+                </div>
+            </div>
+            <div class="mt-6">
+                <button id="confirmSeat" class="w-full bg-[#D24146] text-white py-2 px-4 rounded hover:bg-[#b5363b]">
+                    Confirm Seat
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <nav class="flex m-[20px] justify-between h-[50px]">
+            <div class="text-[#D24146] font-bold text-[25px] font-cursive "><img src="/static/logo.png" alt=""
+                    width="200px" height="100px">
+            </div>
+            <ul class="flex space-x-4">
+
+                <a href="/dashboard">
+                    <li
+                        class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                        <i class="fa-solid fa-chair text-2xl text-gray-500 group-hover:text-white"></i>
+                    </li>
+                </a>
+                <a href="/visualmap">
+
+                    <li
+                        class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                        <i class=" fa-regular fa-map text-2xl text-gray-500 group-hover:text-white"></i>
+                    </li>
+                </a>
+
+                <a href="/profile">
+                    <li
+                        class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                        <i class="fa-solid fa-user text-2xl text-gray-500 group-hover:text-white"></i>
+                    </li>
+                </a>
+                <a href="/notification">
+
+                    <li class=" group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl
+                            text-center flex items-center justify-center cursor-pointer">
+                        <i class="fa-solid fa-bell text-2xl text-gray-500 group-hover:text-white"></i>
+                    </li>
+                </a>
+            </ul>
+
+            </div>
+
+        </nav>
+    </section>
+    <section>
+        <div class="w-[1100px] h-[470px] bg-[#D24146] m-auto">
+            <div class="pt-[20px]">
+                <h1 class="font-bold text-[25px] text-white text-center font-[cursive]"><i>Workspace Visual space</i>
+                </h1>
+            </div>
+
+            <div class="flex justify-evenly mt-[50px]">
+
+                <div class="bg-[#F9F3E1] w-[300px] h-[300px] rounded flex flex-col items-center p-4">
+                    <h1 class="font-bold text-xl mb-4 text-center">
+                        <i>Desk 1F</i>
+                    </h1>
+                    <div class="grid grid-cols-5 gap-2">
+                        {% for i in range(1, 21) %}
+                        {% set seat_no = '1F-' ~ i %}
+
+                        <button type="button" class="seat-btn w-10 h-10 border rounded flex items-center justify-center
+    {% if seat_status and seat_status[seat_no] == 'approved' %}bg-red-200 hover:bg-red-300 
+    {% elif seat_status and seat_status[seat_no] == 'pending' %}bg-yellow-200 hover:bg-yellow-300 
+    {% elif seat_status and seat_status[seat_no] == 'blocked' %}bg-black text-white hover:bg-gray-800 cursor-not-allowed
+    {% else %}bg-green-200 hover:bg-green-300{% endif %}" data-seat-no="{{ seat_no }}" data-floor="1" {% if seat_status
+                            and seat_status[seat_no] in ['blocked' ] %}disabled{% endif %}>
+                            <i class="fa-solid fa-desktop"></i>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <div class="bg-[#F9F3E1] w-[300px] h-[300px] rounded flex flex-col items-center p-4">
+                    <h1 class="font-bold text-xl mb-4 text-center">
+                        <i>Desk 2F</i>
+                    </h1>
+                    <div class="grid grid-cols-5 gap-2">
+                        {% for i in range(1, 21) %}
+                        {% set seat_no = '2F-' ~ i %}
+
+                        <button type="button" class="seat-btn w-10 h-10 border rounded flex items-center justify-center
+    {% if seat_status and seat_status[seat_no] == 'approved' %}bg-red-200 hover:bg-red-300 
+    {% elif seat_status and seat_status[seat_no] == 'pending' %}bg-yellow-200 hover:bg-yellow-300 
+    {% elif seat_status and seat_status[seat_no] == 'blocked' %}bg-black text-white hover:bg-gray-800 cursor-not-allowed
+    {% else %}bg-green-200 hover:bg-green-300{% endif %}" data-seat-no="{{ seat_no }}" data-floor="1" {% if seat_status
+                            and seat_status[seat_no] in [ 'blocked' ] %}disabled{% endif %}>
+                            <i class="fa-solid fa-desktop"></i>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <div class="bg-[#F9F3E1] w-[300px] h-[300px] rounded flex flex-col items-center p-4">
+                    <h1 class="font-bold text-xl mb-6 text-center">
+                        <i>Conference 3F</i>
+                    </h1>
+                    <div class="grid grid-cols-2 gap-6">
+                        {% for i in range(1, 5) %}
+                        {% set seat_no = 'CF-' ~ i %}
+
+                        <button type="button" class="seat-btn w-20 h-20 border rounded flex items-center justify-center
+    {% if seat_status and seat_status[seat_no] == 'approved' %}bg-red-200 hover:bg-red-300 
+    {% elif seat_status and seat_status[seat_no] == 'pending' %}bg-yellow-200 hover:bg-yellow-300 
+    {% elif seat_status and seat_status[seat_no] == 'blocked' %}bg-black text-white hover:bg-gray-800 cursor-not-allowed
+    {% else %}bg-green-200 hover:bg-green-300{% endif %}" data-seat-no="{{ seat_no }}" data-floor="1" {% if seat_status
+                            and seat_status[seat_no] in [ 'blocked' ] %}disabled{% endif %}>
+                            <i class="fa-solid fa-desktop"></i>
+                        </button>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section>
+
+        <div class="w-[1100px] bg-white shadow p-4  flex gap-6 mx-[82px]">
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 bg-red-200 rounded"></div>
+                <span>Booked</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 bg-yellow-200 rounded"></div>
+                <span>Pending</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 bg-black rounded"></div>
+                <span class="text-black">Blocked</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 bg-green-200 rounded"></div>
+                <span>Available</span>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('seatModal');
+            const closeModal = document.getElementById('closeModal');
+            const confirmSeat = document.getElementById('confirmSeat');
+            const seatButtons = document.querySelectorAll('.seat-btn, .conference-btn');
+
+            let currentSeatNo = '';
+            let currentFloor = '';
+
+
+            seatButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    currentSeatNo = this.getAttribute('data-seat-no');
+                    currentFloor = this.getAttribute('data-floor');
+
+                    document.getElementById('deskNumber').textContent = currentSeatNo;
+                    document.getElementById('floorNumber').textContent = currentFloor;
+
+
+                    fetch(`/get-seat-details?seat_no=${currentSeatNo}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            const statusElement = document.getElementById('seatStatus');
+                            statusElement.textContent = data.status;
+                            statusElement.className = 'mt-1 p-2 rounded';
+
+                            let selectedDate = document.querySelector('input[name="date"]').value;
+                            let bookedDate = data.booked_date;
+                            document.getElementById('confirmSeat').disabled = false;
+                            document.getElementById('confirmSeat').classList.remove('opacity-50', 'cursor-not-allowed');
+
+                            if (
+                                data.status.toLowerCase() === 'booked' &&
+                                selectedDate === bookedDate
+                            ) {
+
+                                statusElement.classList.add('bg-red-200', 'text-red-800');
+                                document.getElementById('confirmSeat').disabled = true;
+                                document.getElementById('confirmSeat').classList.add('opacity-50');
+                            } else {
+
+                                statusElement.classList.add('bg-green-200', 'text-green-800');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching seat details:', error);
+                        });
+
+                    modal.classList.remove('hidden');
+                });
+            });
+
+            confirmSeat.addEventListener('click', function () {
+                let seat_no = document.getElementById('deskNumber').innerText;
+                let shift = document.querySelector('select[name="shift"]').value;
+                let date = document.querySelector('input[name="date"]').value;
+
+                fetch('/book-seat', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        'seat_no': seat_no,
+                        'shift': shift,
+                        'date': date
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => alert(data.message || data.error));
+            });
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+
+
+
+        setTimeout(() => {
+            document.querySelectorAll('#flash-messages .flash').forEach(el => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 500);
+            });
+        }, 3000);
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deskswap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+
+<body class="font-cursive ">
+    <section>
+        <nav class="flex m-[20px] justify-between h-[50px]">
+            <div class="text-[#D24146] font-bold text-[25px] font-cursive "><img src="/static/logo.png" alt=""
+                    width="200px" height="100px">
+            </div>
+            <h1 class="text-gray-500 font-bold text-[20px] m-[20px]  font-[cursive]">
+                Welcome, {{ user.fullname }}!
+            </h1>
+
+            <div class=" z-9999">
+
+                <ul class="flex space-x-4">
+
+                    <a href="/dashboard">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-chair text-2xl text-gray-500 group-hover:text-white"></i>
+
+                        </li>
+                    </a>
+                    <a href="/visualmap">
+
+                        <li class=" group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl
+                        text-center flex items-center justify-center cursor-pointer">
+                            <i class=" fa-regular fa-map text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+
+                    <a href="/profile">
+                        <li
+                            class="group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-user text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                    <a href="/notification">
+
+                        <li class=" group transition-all duration-500 hover:bg-[#D24146] w-[35px] h-[35px] rounded-3xl
+                        text-center flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-bell text-2xl text-gray-500 group-hover:text-white"></i>
+                        </li>
+                    </a>
+                </ul>
+
+            </div>
+        </nav>
+
+
+    </section>
+    <section class="h-[500px] bg-[url('/static/image.png')] bg-no-repeat bg-cover flex items-center">
+        <div class="w-[1000px] h-[500px] mx-auto space-y-[50px]">
+            <div>
+                <h1 class="text-gray-600 font-bold text-[40px] font-[cursive]">Choose A Booking</h1>
+                <h3 class="text-[#F48CA2] italic ">Find Your Perfect Spot, Anytime!</h3>
+            </div>
+
+            <div class="">
+
+                <div class="grid grid-cols-2 gap-10  mx-auto ">
+
+
+                    <!-- <div
+                        class="relative h-[250px] bg-white rounded-2xl shadow-lg overflow-hidden p-4 hover:shadow-xl transition flex flex-col justify-between">
+                        <div class="relative z-10">
+                            <h2 class="text-xl font-bold text-gray-700">Chair</h2>
+                        </div>
+                        <div class="relative z-10">
+                            <button
+                                class="bg-pink-500 text-white px-4 py-2 rounded-full shadow hover:bg-pink-600 transition w-fit">
+                                Book Now
+                            </button>
+                        </div>
+                        <div class="absolute bottom-0 right-0">
+                            <img src="/static/yellow.png" alt="Chair" class="w-[200px]">
+                        </div>
+                    </div> -->
+
+                    <div
+                        class="relative bg-white rounded-2xl shadow-lg overflow-hidden p-5 hover:shadow-xl transition flex flex-col justify-between h-[250px]">
+
+                        <div class="relative z-10">
+                            <h2 class="text-xl font-bold text-gray-700">Desk</h2>
+                        </div>
+
+
+                        <div class="relative z-10">
+                            <a href="/visualmap"><button
+                                    class="bg-pink-500 text-white px-4 py-2 rounded-full shadow hover:bg-pink-600 transition w-fit">
+                                    Book Now
+                                </button></a>
+                        </div>
+
+
+                        <div class="absolute bottom-0 right-0">
+                            <img src="/static/desk.png" alt="Desk" class="w-[200px]">
+                        </div>
+                    </div>
+
+
+                    <div
+                        class="relative bg-white  rounded-2xl shadow-lg overflow-hidden p-5 hover:shadow-xl transition flex flex-col justify-between h-[250px]">
+
+                        <div class="relative z-10">
+                            <h2 class="text-xl font-bold text-gray-700">Conference Hall</h2>
+                        </div>
+
+
+                        <div class="relative z-10">
+
+                            <a href="/visualmap"><button
+                                    class="bg-pink-500 text-white px-4 py-2 rounded-full shadow hover:bg-pink-600 transition w-fit">
+                                    Book now</button></a>
+                        </div>
+
+
+                        <div class="absolute bottom-0 right-0">
+                            <img src="/static/conference.png" alt="Desk" class="w-[200px]">
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
